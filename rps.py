@@ -210,7 +210,7 @@ QUIT_CHOICE = 3
     """
     Purpose: Runs the whole program. Write this function LAST.
     """
-   def rps():
+def rps():
     """Connect everything. Write this last. Calls all of the above."""
     print_initial_header()
     p1_name = get_name(1)
