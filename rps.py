@@ -207,7 +207,6 @@ QUIT_CHOICE = 3
 # Prompt:      Under Construction
 
 
-def rps():
     """
     Purpose: Runs the whole program. Write this function LAST.
     """
@@ -228,7 +227,6 @@ def rps():
         elif choice == 3:
             print_closer()
             break
-    pass
 
 
 # ***********************************************************************
