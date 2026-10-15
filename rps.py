@@ -207,9 +207,9 @@ QUIT_CHOICE = 3
 # Prompt:      Under Construction
 
 
-    """
-    Purpose: Runs the whole program. Write this function LAST.
-    """
+    
+# Purpose: Runs the whole program. Write this function LAST.
+   
 def rps():
     """Connect everything. Write this last. Calls all of the above."""
     print_initial_header()
