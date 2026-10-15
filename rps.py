@@ -211,7 +211,23 @@ def rps():
     """
     Purpose: Runs the whole program. Write this function LAST.
     """
-    # TODO: implement
+   def rps():
+    """Connect everything. Write this last. Calls all of the above."""
+    print_initial_header()
+    p1_name = get_name(1)
+    p2_name = get_name(2)
+    
+    while True:
+        choice = get_menu_choice()
+        if choice == 1:
+            winner = do_game(p1_name, p2_name, 1)
+            announce_winner(winner)
+        elif choice == 2:
+            print("Under Construction")
+            announce_winner("")
+        elif choice == 3:
+            print_closer()
+            break
     pass
 
 
@@ -222,9 +238,118 @@ def rps():
 
 def is_move_good(move):
     """TO FILL IN: describe what this function does in one line."""
-    # TODO: implement
+    """Is this a valid move? Calls nothing."""
+    if not isinstance(move, str):
+        return False
+    return move.lower() in ["r", "p", "s"]
 
-    # NOTE: replace this return statement!!!
+
+def is_round_winner(move, opponent_move):
+    """Does the first move beat the second? Calls nothing."""
+    m = move.lower()
+    om = opponent_move.lower()
+    
+    if m == "r" and om == "s":
+        return True
+    if m == "s" and om == "p":
+        return True
+    if m == "p" and om == "r":
+        return True
+    return False
+
+
+def get_name(player_number):
+    """Ask for a name. Use a default if empty. Calls print_error_message."""
+    if player_number == 1:
+        default_name = "Rocky"
+    else:
+        default_name = "Creed"
+    
+    name = input(f"Enter name for Player {player_number} (default {default_name}): ").strip()
+    if name == "":
+        print_error_message(f"Name cannot be empty. Using default: {default_name}")
+        return default_name
+    return name
+
+
+def get_menu_choice():
+    """Show the menu. Ask until the choice is valid. Calls print_menu."""
+    while True:
+        print_menu()
+        choice_str = input("Enter your choice (1-3): ").strip()
+        if choice_str in ["1", "2", "3"]:
+            return int(choice_str)
+        else:
+            print_error_message("Invalid menu choice. Please enter 1, 2, or 3.")
+
+
+def get_move(player_name):
+    """Ask for a move. Use a default if invalid. Calls is_move_good and print_error_message."""
+    move = input(f"{player_name}, enter your move (r, p, s): ").strip()
+    if is_move_good(move):
+        return move.lower()
+    else:
+        print_error_message(f"Invalid move '{move}'. Defaulting to 'r' (rock).")
+        return "r"
+
+
+def announce_round_winner(winner_name):
+    """Print the round result. Calls nothing."""
+    if winner_name == "":
+        print("This round is a draw.")
+    else:
+        print(f"Round winner: {winner_name}")
+
+
+def do_round(p1_name, p2_name):
+    """Play one round. Return DRAW, PLAYER_1 or PLAYER_2. Calls get_move and is_round_winner."""
+    p1_move = get_move(p1_name)
+    p2_move = get_move(p2_name)
+    
+    print(f"{p1_name} played {p1_move}, {p2_name} played {p2_move}.")
+    
+    if p1_move == p2_move:
+        return DRAW
+    elif is_round_winner(p1_move, p2_move):
+        return PLAYER_1
+    else:
+        return PLAYER_2
+
+
+def announce_winner(winner_name):
+    """Print the game result. Calls nothing."""
+    if winner_name == "":
+        print("The game ends in no winner (draw).")
+    else:
+        print(f"Congratulations! The overall winner is {winner_name}.")
+
+
+def do_game(p1_name, p2_name, game_type):
+    """Play three rounds. Return the winner's name. Calls do_round and announce_round_winner."""
+    p1_wins = 0
+    p2_wins = 0
+    
+    for round_num in range(1, 4):
+        print(f"\n--- Round {round_num} ---")
+        round_result = do_round(p1_name, p2_name)
+        
+        if round_result == PLAYER_1:
+            p1_wins += 1
+            announce_round_winner(p1_name)
+        elif round_result == PLAYER_2:
+            p2_wins += 1
+            announce_round_winner(p2_name)
+        else:
+            announce_round_winner("")
+            
+    print(f"\nFinal score: {p1_name}: {p1_wins} round(s), {p2_name}: {p2_wins} round(s).")
+    
+    if p1_wins > p2_wins:
+        return p1_name
+    elif p2_wins > p1_wins:
+        return p2_name
+    else:
+        return ""
     return True
 
 
