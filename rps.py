@@ -350,7 +350,6 @@ def do_game(p1_name, p2_name, game_type):
         return p2_name
     else:
         return ""
-    return True
 
 
 # ***********************************************************************
